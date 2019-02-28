@@ -59,6 +59,7 @@ bot.on('message', message => {
  
  bot.on('message', message => {
     if (message.content === '!test') {
+	process.env.LEAGUE_API_PLATFORM_ID = 'euw1'
 	leagueJs.Summoner
     .gettingByName('Klanat')
     .then(data => {
