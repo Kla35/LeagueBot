@@ -5,7 +5,6 @@ const ytdl = require('ytdl-core');
 const LeagueJS = require('./node_modules/leaguejs/lib/LeagueJS.js');
 const PREFIX = "!";
 var moment = require('moment');
-process.env.LEAGUE_API_PLATFORM_ID = 'euw1'
 
 const leagueJs = new LeagueJS(process.env.LEAGUE_API_KEY, {
         useV4: true, // enables apiVersion overrides
@@ -66,7 +65,8 @@ bot.on('message', message => {
     .then(data => {
         'use strict';
         console.log(data);
-		var ID = data.substring(7,50);
+		var d = data
+		var ID = d.substring(7,50);
 		console.log(ID);
     })
     .catch(err => {
