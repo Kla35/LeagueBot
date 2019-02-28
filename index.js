@@ -59,8 +59,8 @@ bot.on('message', message => {
  
  bot.on('message', message => {
     if (message.content === '!test') {
-      leagueJs.Summoner
-    .gettingByName('Klanat')
+	leagueJs.Summoner
+    .gettingByName('EldoranDev')
     .then(data => {
         'use strict';
         console.log(data);
@@ -68,8 +68,7 @@ bot.on('message', message => {
     .catch(err => {
         'use strict';
         console.log(err);
-    });
-    })
+    });	
   }
   });
 
