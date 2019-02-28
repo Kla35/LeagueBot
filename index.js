@@ -5,6 +5,8 @@ const ytdl = require('ytdl-core');
 const LeagueJS = require('./node_modules/leaguejs/lib/LeagueJS.js');
 const PREFIX = "!";
 var moment = require('moment');
+process.env.LEAGUE_API_PLATFORM_ID = 'euw1'
+process.env.PLATFORM_ID = 'euw1'
 
 const leagueJs = new LeagueJS(process.env.LEAGUE_API_KEY, {
         useV4: true, // enables apiVersion overrides
@@ -59,7 +61,7 @@ bot.on('message', message => {
  
  bot.on('message', message => {
     if (message.content === '!test') {
-	process.env.LEAGUE_API_PLATFORM_ID = 'euw1'
+	
 	leagueJs.Summoner
     .gettingByName('Klanat')
     .then(data => {
