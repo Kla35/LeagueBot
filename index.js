@@ -60,10 +60,12 @@ bot.on('message', message => {
  bot.on('message', message => {
     if (message.content === '!test') {
 	leagueJs.Summoner
-    .gettingByName('EldoranDev')
+    .gettingByName('Klanat')
     .then(data => {
         'use strict';
         console.log(data);
+		var ID = data.substring(7,50);
+		console.log(ID);
     })
     .catch(err => {
         'use strict';
