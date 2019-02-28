@@ -52,7 +52,7 @@ bot.on('message', message => {
 bot.on('message', message => {
     if (message.content === '!mp') {
       message.author.createDM().then(channel => {
-      channel.send(`Oh non, un fou...`);
+      channel.send(`Oh non, un fou..`);
     })
   }
   });
