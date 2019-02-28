@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require('fs');
 const ytdl = require('ytdl-core');
-const LeagueJS = require('../node_modules/leaguejs/lib/LeagueJS.js');
+const LeagueJS = require('./node_modules/leaguejs/lib/LeagueJS.js');
 const PREFIX = "!";
 var moment = require('moment');
 
