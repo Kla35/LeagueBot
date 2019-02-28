@@ -2,9 +2,28 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require('fs');
 const ytdl = require('ytdl-core');
+const LeagueJS = require('../lib/LeagueJS.js');
 const PREFIX = "!";
 var moment = require('moment');
 
+const leagueJs = new LeagueJS(process.env.LEAGUE_API_KEY, {
+        useV4: true, // enables apiVersion overrides
+        // these values override default values in Config.js
+        // values omitted will use defaults from Config.js!
+        apiVersionOverrides: {
+            'Champion': 'v3',
+            'ChampionMastery': 'v4',
+            'League': 'v4',
+            'LolStatus': 'v3',
+            'Match': 'v4',
+            'Spectator': 'v4',
+            'Summoner': 'v4',
+            'ThirdPartyCode': 'v4',
+            // 'TournamentStub': 'v3',
+            // 'Tournament': 'v3'
+        }
+    } )
+	
 var dispatcher;
 var stop;
 var heure;
@@ -37,7 +56,24 @@ bot.on('message', message => {
     })
   }
   });
+ 
+ bot.on('message', message => {
+    if (message.content === '!test') {
+      leagueJs.Summoner
+    .gettingByName('Klanat')
+    .then(data => {
+        'use strict';
+        console.log(data);
+    })
+    .catch(err => {
+        'use strict';
+        console.log(err);
+    });
+    })
+  }
+  });
 
+	
 bot.on('message', message =>{
     if(message.content.startsWith('!play')){
     var str = message.content
