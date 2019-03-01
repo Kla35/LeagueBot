@@ -1,12 +1,19 @@
+//Modifier API KEY si marche plus (erreur 401)
+
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require('fs');
 const ytdl = require('ytdl-core');
+var getJSON = require('get-json')
+var champion = require("./champion2.json");
 const LeagueJS = require('./node_modules/leaguejs/lib/LeagueJS.js');
 const PREFIX = "!";
 var moment = require('moment');
-
-const leagueJs = new LeagueJS(process.env.LEAGUE_API_KEY, {
+var LEAGUE_API_KEY = process.env.LEAGUE_API_KEY;
+var TOKEN = process.env.TOKEN;
+ //
+ 
+const leagueJs = new LeagueJS(LEAGUE_API_KEY, {
         useV4: true, // enables apiVersion overrides
         // these values override default values in Config.js
         // values omitted will use defaults from Config.js!
@@ -30,7 +37,7 @@ var heure;
 
 stop="0";
 
-bot.login(process.env.TOKEN) //TOKEN
+bot.login(TOKEN) //
 
 bot.on("message", async message => {
     // This event will run on every single message received, from any channel or DM.
@@ -44,7 +51,8 @@ bot.on("message", async message => {
 bot.on('message', message => {
     if (message.content === '!help') {
       message.author.createDM().then(channel => {
-      channel.send(`a`);
+      channel.send(`Commande du bot :
+	  => !lol maitrise [Invocateur] : Affiche les 5 plus grosses maîtrises`);
     })
   }
   });
@@ -58,21 +66,50 @@ bot.on('message', message => {
   });
  
  bot.on('message', message => {
-    if (message.content === '!test') {
-	
-	leagueJs.Summoner
-    .gettingByName('Klanat')
-    .then(data => {
-        'use strict';
-        console.log(data);
-		var d = data
-		var ID = d.substring(7,50);
-		console.log(ID);
-    })
-    .catch(err => {
-        'use strict';
-        console.log(err);
-    });	
+    if (message.content.startsWith('!lol maitrise')) {
+		var str = message.content;
+		id = message.content;
+		str = str.substring(14)
+		leagueJs.Summoner
+		.gettingByName(str)
+		.then(data => {
+			'use strict';
+			console.log(data['id']);
+			id = data['id'];
+			getJSON('https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/'+id+'?api_key='+LEAGUE_API_KEY, function(error, response){
+				var maitrise;
+				var i = 0;
+				var checkChampion;
+				var j = 0;
+				maitrise = response;
+				var tabchampion = new Array(5);
+				while (i<5) {
+					j = 0;
+					checkChampion = response[i].championId.toString();
+					var returnChampion;
+					while ((checkChampion != returnChampion)){
+						j=j+1;
+						returnChampion = champion[j].key;
+					}
+					if (checkChampion === champion[j]['key']) {
+						console.log(champion[j]['key']);
+						tabchampion[i] = champion[j]['name'];
+					}
+					i=i+1;
+				}
+				message.channel.sendMessage(`Voici les champions les plus maitrisés par ` + str + `
+=> ` + tabchampion[0] + `, maîtrise ` + maitrise[0]['championLevel'] + ` avec ` + maitrise[0]['championPoints'] + ` points
+=> ` + tabchampion[1] + `, maîtrise ` + maitrise[1]['championLevel'] + ` avec ` + maitrise[1]['championPoints'] + ` points
+=> ` + tabchampion[2] + `, maîtrise ` + maitrise[2]['championLevel'] + ` avec ` + maitrise[2]['championPoints'] + ` points
+=> ` + tabchampion[3] + `, maîtrise ` + maitrise[3]['championLevel'] + ` avec ` + maitrise[3]['championPoints'] + ` points
+=> ` + tabchampion[4] + `, maîtrise ` + maitrise[4]['championLevel'] + ` avec ` + maitrise[4]['championPoints'] + ` points`);
+			});
+		})
+		.catch(err => {
+			'use strict';
+			console.log(err);
+		});
+		
   }
   });
 

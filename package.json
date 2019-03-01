@@ -9,11 +9,15 @@
   "author": "Kla",
   "license": "MIT",
   "dependencies": {
+    "big-integer": "^1.6.42",
     "discord.js": "^11.3.2",
+    "get-json": "^1.0.1",
     "leaguejs": "^1.14.5",
+    "long": "^4.0.0",
     "moment": "^2.24.0",
     "npm": "^6.8.0",
     "opusscript": "0.0.6",
+    "xmlhttprequest": "^1.8.0",
     "ytdl-core": "^0.20.2"
   }
 }
