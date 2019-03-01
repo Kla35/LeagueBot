@@ -3336,6 +3336,84 @@
     "description": "Runeterra has no shortage of valiant champions, but few are as tenacious as Poppy. Bearing the legendary hammer of Orlon, a weapon twice her size, this determined yordle has spent untold years searching in secret for the fabled “Hero of Demacia,” said..."
   },
   {
+    "id": "sylas",
+    "key": "517",
+    "name": "Sylas",
+    "title": "the Bloodharbor Ripper",
+    "tags": [
+      "t",
+      "n"
+    ],
+    "stats": {
+      "hp": 600,
+      "hpperlevel": 110,
+      "mp": 380,
+      "mpperlevel": 50,
+      "movespeed": 330,
+      "armor": 42,
+      "armorperlevel": 4,
+      "spellblock": 32,
+      "spellblockperlevel": 1.25,
+      "attackrange": 150,
+      "hpregen": 5,
+      "hpregenperlevel": 0.5,
+      "mpregen": 8,
+      "mpregenperlevel": 1,
+      "crit": 0,
+      "critperlevel": 0,
+      "attackdamage": 60,
+      "attackdamageperlevel": 2,
+      "attackspeedoffset": -0.065,
+      "attackspeedperlevel": 2.5
+    },
+    "icon": "https://championmasterylookup.derpthemeus.com/img/championIcons/Sylas.png",
+    "sprite": {
+      "url": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/sprite/champion2.png",
+      "x": 288,
+      "y": 96
+    },
+    "description": "A METTRE A JOUR"
+  },
+  {
+    "id": "neeko",
+    "key": "518",
+    "name": "Neeko",
+    "title": "the Bloodharbor Ripper",
+    "tags": [
+      "t",
+      "n"
+    ],
+    "stats": {
+      "hp": 600,
+      "hpperlevel": 110,
+      "mp": 380,
+      "mpperlevel": 50,
+      "movespeed": 330,
+      "armor": 42,
+      "armorperlevel": 4,
+      "spellblock": 32,
+      "spellblockperlevel": 1.25,
+      "attackrange": 150,
+      "hpregen": 5,
+      "hpregenperlevel": 0.5,
+      "mpregen": 8,
+      "mpregenperlevel": 1,
+      "crit": 0,
+      "critperlevel": 0,
+      "attackdamage": 60,
+      "attackdamageperlevel": 2,
+      "attackspeedoffset": -0.065,
+      "attackspeedperlevel": 2.5
+    },
+    "icon": "https://championmasterylookup.derpthemeus.com/img/championIcons/Neeko.png",
+    "sprite": {
+      "url": "http://ddragon.leagueoflegends.com/cdn/8.11.1/img/sprite/champion2.png",
+      "x": 288,
+      "y": 96
+    },
+    "description": "A METTRE A JOUR"
+  },
+  {
     "id": "pyke",
     "key": "555",
     "name": "Pyke",

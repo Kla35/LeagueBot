@@ -52,7 +52,7 @@ bot.on('message', message => {
     if (message.content === '!help') {
       message.author.createDM().then(channel => {
       channel.send(`Commande du bot :
-	  => !lol maitrise [Invocateur] : Affiche les 5 plus grosses maîtrises`);
+	  => !lol maitrise [Invocateur] : Affiche les 5 plus grosses maîtrises de l'invocateur`);
     })
   }
   });
@@ -60,10 +60,20 @@ bot.on('message', message => {
 bot.on('message', message => {
     if (message.content === '!mp') {
       message.author.createDM().then(channel => {
-      channel.send(`Oh non, un fou..`);
+      channel.send(`Ouverture des MP :`);
     })
   }
   });
+ 
+ bot.on('message', message =>{
+    if(message.content.startsWith('.')){
+		var str = message.content.substring(1); //Pour l'exemple
+		var letter = str.charAt(0); //Récupération de la première lettre
+		str = letter.toUpperCase() + str.substring(1) //Assemblage de la première lettre avec le reste du nom - la première lettre
+		message.channel.sendMessage(str);
+    }
+})
+ 
  
  bot.on('message', message => {
     if (message.content.startsWith('!lol maitrise')) {
@@ -83,36 +93,175 @@ bot.on('message', message => {
 				var j = 0;
 				maitrise = response;
 				var tabchampion = new Array(5);
-				while (i<5) {
-					j = 0;
-					checkChampion = response[i].championId.toString();
-					var returnChampion;
-					while ((checkChampion != returnChampion)){
-						j=j+1;
-						returnChampion = champion[j].key;
+				var tabnumchampion = new Array(5);
+				var nbperso = response.length;
+				if (nbperso > 4) {
+					while (i<5) {
+						j = 0;
+						checkChampion = response[i].championId.toString();
+						var returnChampion;
+						while ((checkChampion != returnChampion)){
+							j=j+1;
+							returnChampion = champion[j].key;
+						}
+						if (checkChampion === champion[j]['key']) {
+							console.log(champion[j]['key']);
+							tabchampion[i] = champion[j]['name'];
+							tabnumchampion[i] = champion[j]['icon'];
+						}
+						i=i+1;
 					}
-					if (checkChampion === champion[j]['key']) {
-						console.log(champion[j]['key']);
-						tabchampion[i] = champion[j]['name'];
-					}
-					i=i+1;
+				var z;
+				for (z=0;z<5;z++){
+				const embed = {
+				  "description": "=> **" + tabchampion[z] + ", maîtrise " + maitrise[z]['championLevel'] + "**"+ "```Points de maîtrise : " + maitrise[z]['championPoints'] + "```",
+				  "thumbnail": {
+					"url": tabnumchampion[z]
+				  }
+				};
+				message.channel.sendMessage({ embed });;
 				}
-				message.channel.sendMessage(`Voici les champions les plus maitrisés par ` + str + `
-=> ` + tabchampion[0] + `, maîtrise ` + maitrise[0]['championLevel'] + ` avec ` + maitrise[0]['championPoints'] + ` points
-=> ` + tabchampion[1] + `, maîtrise ` + maitrise[1]['championLevel'] + ` avec ` + maitrise[1]['championPoints'] + ` points
-=> ` + tabchampion[2] + `, maîtrise ` + maitrise[2]['championLevel'] + ` avec ` + maitrise[2]['championPoints'] + ` points
-=> ` + tabchampion[3] + `, maîtrise ` + maitrise[3]['championLevel'] + ` avec ` + maitrise[3]['championPoints'] + ` points
-=> ` + tabchampion[4] + `, maîtrise ` + maitrise[4]['championLevel'] + ` avec ` + maitrise[4]['championPoints'] + ` points`);
+				} else {
+					message.channel.sendMessage("Erreur : " + str + " possède moins de 5 maitrises");
+				}
+				
 			});
 		})
 		.catch(err => {
 			'use strict';
+			message.channel.sendMessage("Erreur : " + str + " n'existe pas sur le serveur EUW");
+			console.log(err);
+		});
+		
+  }
+  });
+  
+  bot.on('message', message => {
+    if (message.content.startsWith('!lol profil')) {
+		var str = message.content;
+		id = message.content;
+		str = str.substring(12)
+		leagueJs.Summoner
+		.gettingByName(str)
+		.then(data => {
+			'use strict';
+			console.log(data['id']);
+			id = data['id'];
+			getJSON('https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/'+id+'?api_key='+LEAGUE_API_KEY, function(error, response){
+				var maitrise = response;
+				//Test Mains
+				var i = 0;
+				var checkChampion;
+				var j = 0;
+				var tabchampion = new Array(5);
+				var tabnumchampion = new Array(5);
+				var nbperso = response.length;
+				if (nbperso > 3) {
+					while (i<3) {
+						j = 0;
+						checkChampion = response[i].championId.toString();
+						var returnChampion;
+						while ((checkChampion != returnChampion)){
+							j=j+1;
+							returnChampion = champion[j].key;
+						}
+						if (checkChampion === champion[j]['key']) {
+							console.log(champion[j]['key']);
+							tabchampion[i] = champion[j]['name'];
+							tabnumchampion[i] = champion[j]['icon'];
+						}
+						i=i+1;
+					}
+				} else {
+						while (i<nbperso) {
+						j = 0;
+						checkChampion = response[i].championId.toString();
+						var returnChampion;
+						while ((checkChampion != returnChampion)){
+							j=j+1;
+							returnChampion = champion[j].key;
+						}
+						if (checkChampion === champion[j]['key']) {
+							console.log(champion[j]['key']);
+							tabchampion[i] = champion[j]['name'];
+							tabnumchampion[i] = champion[j]['icon'];
+						}
+						i=i+1;
+					}
+					while (i<3){
+						tabchampion[i] = "Vide";
+					}
+				}
+				getJSON('https://euw1.api.riotgames.com/lol/league/v4/positions/by-summoner/'+id+'?api_key='+LEAGUE_API_KEY, function(error, response){
+					
+					var ranked = response;
+					var y = -1;
+					var stop = 0;
+					//Test Ranked
+					if (ranked.length > 0) {
+						while ((y<ranked.length) && (stop === 0)){
+						y=y+1;
+						if (ranked[y].queueType === "RANKED_SOLO_5x5"){
+							stop = 1;
+						}
+					}
+					var winrate = (ranked[y].wins / (ranked[y].wins + ranked[y].losses))*100;
+					winrate = winrate.toFixed(2)
+					var urlRank = "https://outilnumj.000webhostapp.com/images/"+ ranked[y].tier +".png"
+					console.log(urlRank);
+					const embed = {
+					  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
+					  "description": "SoloQ : " + ranked[y].tier + " " + ranked[y].rank + " - " + ranked[y].leaguePoints + "LP ```\n Winrate : " + winrate + "% \n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
+					  "thumbnail": {
+						"url": urlRank
+					  }
+					};
+					message.channel.sendMessage({ embed });;
+					} else {
+						const embed = {
+					  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
+					  "description": "Non ranked ```\n Winrate : " + winrate + "% \n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
+					  "thumbnail": {
+						"url": "https://cdn.discordapp.com/embed/avatars/0.png"
+					  }
+						};
+						message.channel.sendMessage({ embed });;
+					}
+				});
+			});
+		})
+		.catch(err => {
+			'use strict';
+			message.channel.sendMessage("Erreur : " + str + " n'existe pas sur le serveur EUW");
 			console.log(err);
 		});
 		
   }
   });
 
+/*
+const embed = {
+  "title": "**${summoner} - Niveau {lvl}**",
+  "description": "**--------------------------------------**",
+  "thumbnail": {
+    "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+  },
+  "fields": [
+    {
+      "name": "Tier : {league} {lvl} - {nblp} LP",
+      "value": "-------------------------------------"
+    },
+    {
+      "name": "Winrate : {%}% - {nb} LP",
+      "value": "-------------------------------------"
+    },
+    {
+      "name": "Mains :",
+      "value": "-------------------------------------"
+    }
+  ]
+};
+channel.send({ embed }); */
 	
 bot.on('message', message =>{
     if(message.content.startsWith('!play')){
