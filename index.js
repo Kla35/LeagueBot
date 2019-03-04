@@ -208,7 +208,7 @@ bot.on('message', message => {
 					console.log(urlRank);
 					const embed = {
 					  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
-					  "description": "SoloQ : " + ranked[y].tier + " " + ranked[y].rank + " - " + ranked[y].leaguePoints + "LP ```\n Winrate : " + winrate + "% - " + ranked[y].wins + "W | " + ranked[y].losses + "L \n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
+					  "description": "SoloQ : " + ranked[y].tier + " " + ranked[y].rank + " - " + ranked[y].leaguePoints + "LP ```\n Winrate : " + winrate + "% \n(" + ranked[y].wins + "W | " + ranked[y].losses + "L )\n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
 					  "thumbnail": {
 						"url": urlRank
 					  }
