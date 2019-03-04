@@ -9,8 +9,8 @@ var champion = require("./champion2.json");
 const LeagueJS = require('./node_modules/leaguejs/lib/LeagueJS.js');
 const PREFIX = "!";
 var moment = require('moment');
-var LEAGUE_API_KEY = process.env.LEAGUE_API_KEY;
-var TOKEN = process.env.TOKEN;
+var LEAGUE_API_KEY = 'RGAPI-2471b6fc-0ec2-4b34-8813-f4086538865d';//process.env.LEAGUE_API_KEY;
+var TOKEN = 'NTUwNjgzMzE1ODc5OTM2MDIw.D1l_WQ.7netG-Y9yunOAxIH1hXFZCTb2Fw';//process.env.TOKEN;
  //
  
 const leagueJs = new LeagueJS(LEAGUE_API_KEY, {
@@ -66,11 +66,8 @@ bot.on('message', message => {
   });
  
  bot.on('message', message =>{
-    if(message.content.startsWith('.')){
-		var str = message.content.substring(1); //Pour l'exemple
-		var letter = str.charAt(0); //Récupération de la première lettre
-		str = letter.toUpperCase() + str.substring(1) //Assemblage de la première lettre avec le reste du nom - la première lettre
-		message.channel.sendMessage(str);
+    if(message.content.startsWith('!test')){
+		console.log(bot.user.fetchProfile());
     }
 })
  
@@ -211,7 +208,7 @@ bot.on('message', message => {
 					console.log(urlRank);
 					const embed = {
 					  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
-					  "description": "SoloQ : " + ranked[y].tier + " " + ranked[y].rank + " - " + ranked[y].leaguePoints + "LP ```\n Winrate : " + winrate + "% \n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
+					  "description": "SoloQ : " + ranked[y].tier + " " + ranked[y].rank + " - " + ranked[y].leaguePoints + "LP ```\n Winrate : " + winrate + "% - " + ranked[y].wins + "W | " + ranked[y].losses + "L \n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
 					  "thumbnail": {
 						"url": urlRank
 					  }
