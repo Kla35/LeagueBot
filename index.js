@@ -195,7 +195,7 @@ bot.on('message', message => {
 					var ranked = response;
 					getJSON('https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/'+accountID, function(error, response){
 						var match = response;
-						//Test
+						
 						var y = -1;
 						var stop = 0;
 						//Test Ranked
@@ -231,7 +231,7 @@ bot.on('message', message => {
 							};
 							message.channel.sendMessage({ embed });;
 						}
-					}
+					});
 				});
 			});
 		})
