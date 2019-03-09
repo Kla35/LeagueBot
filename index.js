@@ -136,13 +136,14 @@ bot.on('message', message => {
   bot.on('message', message => {
     if (message.content.startsWith('!lol profil')) {
 		var str = message.content;
+		var accountID;
 		id = message.content;
-		str = str.substring(12)
+		str = str.substring(12);
 		leagueJs.Summoner
 		.gettingByName(str)
 		.then(data => {
 			'use strict';
-			console.log(data['id']);
+			accountID = data['accountId'];
 			id = data['id'];
 			getJSON('https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/'+id+'?api_key='+LEAGUE_API_KEY, function(error, response){
 				var maitrise = response;
@@ -191,39 +192,44 @@ bot.on('message', message => {
 					}
 				}
 				getJSON('https://euw1.api.riotgames.com/lol/league/v4/positions/by-summoner/'+id+'?api_key='+LEAGUE_API_KEY, function(error, response){
-					
 					var ranked = response;
-					var y = -1;
-					var stop = 0;
-					//Test Ranked
-					if (ranked.length > 0) {
-						while ((y<ranked.length) && (stop === 0)){
-						y=y+1;
-						if (ranked[y].queueType === "RANKED_SOLO_5x5"){
-							stop = 1;
+					getJSON('https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/'+accountID, function(error, response){
+						var match = response;
+						var y = -1;
+						var stop = 0;
+						//Test Ranked
+						if (ranked.length > 0) {
+							while ((y<ranked.length) && (stop === 0)){
+							y=y+1;
+							if (ranked[y].queueType === "RANKED_SOLO_5x5"){
+								stop = 1;
+							}
 						}
-					}
-					var winrate = (ranked[y].wins / (ranked[y].wins + ranked[y].losses))*100;
-					winrate = winrate.toFixed(2)
-					var urlRank = "https://outilnumj.000webhostapp.com/images/"+ ranked[y].tier +".png"
-					console.log(urlRank);
-					const embed = {
-					  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
-					  "description": "SoloQ : " + ranked[y].tier + " " + ranked[y].rank + " - " + ranked[y].leaguePoints + "LP ```\n Winrate : " + winrate + "% \n(" + ranked[y].wins + "W | " + ranked[y].losses + "L )\n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
-					  "thumbnail": {
-						"url": urlRank
-					  }
-					};
-					message.channel.sendMessage({ embed });;
-					} else {
+						//Test Winrate
+						var winrate = (ranked[y].wins / (ranked[y].wins + ranked[y].losses))*100;
+						winrate = winrate.toFixed(2)
+						//Search pic url rank
+						var urlRank = "https://outilnumj.000webhostapp.com/images/"+ ranked[y].tier +".png"
+						console.log(urlRank);
+						//Message
 						const embed = {
-					  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
-					  "description": "Non ranked ```\n Winrate : " + winrate + "% \n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
-					  "thumbnail": {
-						"url": "https://cdn.discordapp.com/embed/avatars/0.png"
-					  }
+						  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
+						  "description": "SoloQ : " + ranked[y].tier + " " + ranked[y].rank + " - " + ranked[y].leaguePoints + "LP ```\n Winrate : " + winrate + "% \n(" + ranked[y].wins + "W | " + ranked[y].losses + "L )"+"``````"+"\n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
+						  "thumbnail": {
+							"url": urlRank
+						  }
 						};
 						message.channel.sendMessage({ embed });;
+						} else {
+							const embed = {
+						  "title": "**" + str +" - Niveau "+ data.summonerLevel + "**",
+						  "description": "Non ranked ```\n Winrate : " + winrate + "% \n Mains : "+ tabchampion[0] + "," + tabchampion[1] + ","+tabchampion[2]+"```",
+						  "thumbnail": {
+							"url": "https://cdn.discordapp.com/embed/avatars/0.png"
+						  }
+							};
+							message.channel.sendMessage({ embed });;
+						}
 					}
 				});
 			});
