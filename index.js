@@ -9,8 +9,8 @@ var champion = require("./champion2.json");
 const LeagueJS = require('./node_modules/leaguejs/lib/LeagueJS.js');
 const PREFIX = "!";
 var moment = require('moment');
-var LEAGUE_API_KEY = 'RGAPI-2471b6fc-0ec2-4b34-8813-f4086538865d';//process.env.LEAGUE_API_KEY;
-var TOKEN = 'NTUwNjgzMzE1ODc5OTM2MDIw.D1l_WQ.7netG-Y9yunOAxIH1hXFZCTb2Fw';//process.env.TOKEN;
+var LEAGUE_API_KEY = process.env.LEAGUE_API_KEY;
+var TOKEN = process.env.TOKEN;
  //
  
 const leagueJs = new LeagueJS(LEAGUE_API_KEY, {
@@ -195,6 +195,7 @@ bot.on('message', message => {
 					var ranked = response;
 					getJSON('https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/'+accountID, function(error, response){
 						var match = response;
+						//Test
 						var y = -1;
 						var stop = 0;
 						//Test Ranked
