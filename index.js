@@ -187,6 +187,7 @@ bot.on('message', message => {
 					}
 					while (i<3){
 						tabchampion[i] = "Vide";
+						i=i+1;
 					}
 				}
 				getJSON('https://euw1.api.riotgames.com/lol/league/v4/positions/by-summoner/'+id+'?api_key='+LEAGUE_API_KEY, function(error, response){
