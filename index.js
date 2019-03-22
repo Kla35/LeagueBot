@@ -11,7 +11,7 @@ const PREFIX = "!";
 var moment = require('moment');
 var LEAGUE_API_KEY = process.env.LEAGUE_API_KEY;
 var TOKEN = process.env.TOKEN;
- //
+
  
 const leagueJs = new LeagueJS(LEAGUE_API_KEY, {
         useV4: true, // enables apiVersion overrides
@@ -52,6 +52,7 @@ bot.on('message', message => {
     if (message.content === '!help') {
       message.author.createDM().then(channel => {
       channel.send(`Commande du bot :
+	  => !lol profil [Invocateur] : Affiche le profil de l'invocateur
 	  => !lol maitrise [Invocateur] : Affiche les 5 plus grosses maîtrises de l'invocateur`);
     })
   }
@@ -195,7 +196,18 @@ bot.on('message', message => {
 					var ranked = response;
 					getJSON('https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/'+accountID, function(error, response){
 						var match = response;
-						
+						/*Test forme
+						var compteRanked=0;
+						if (match.length > 0){
+							var compteDef=0;
+							while ((compteRanked > 5) || (match['matchs'].length>compteDef)){
+								if (match['matchs'][compteDef].queue === 420){
+									
+								}
+							}
+							
+						}*/
+						//A
 						var y = -1;
 						var stop = 0;
 						//Test Ranked
