@@ -15,7 +15,7 @@
     "leaguejs": "^1.14.5",
     "long": "^4.0.0",
     "moment": "^2.24.0",
-    "npm": "^6.8.0",
+    "npm": "^6.14.6",
     "opusscript": "0.0.6",
     "xmlhttprequest": "^1.8.0",
     "ytdl-core": "^0.20.2"
